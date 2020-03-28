@@ -1,0 +1,47 @@
+//--------  CONTAINER
+.container {
+  padding: 40px 80px 40px 120px;
+}
+
+//--------  HEADER
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+//--------  CONTAINER
+
+.hourly-temperature,
+.daily-temperature {
+  display: none;
+  overflow-x: auto;
+
+  padding: 40px 0;
+  font-weight: 400;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-bottom: 1px solid #fff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 3px;
+  }
+
+  &.show {
+    display: flex;
+  }
+}
+
+// Small Device
+// 37.5em = 600
+@media screen and(max-width: 37.5em) {
+  .container {
+    padding: 20px;
+  }
+}

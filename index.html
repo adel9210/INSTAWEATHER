@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insta & Weather</title>
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700,800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/main.main.css">
+</head>
+
+<body>
+    <!-- Loader  -->
+    <div class="loader">
+        <div></div>
+        <!-- <div></div> -->
+    </div>
+
+    <main class="container">
+
+        <!-------- Weather Header Start -->
+        <header class="header">
+            <a href="" class="logo" title="Logo">instaweather</a>
+            <div class="weather-nav">
+                <a href="#" class="weather-nav__link weather-nav__link--celecus" data-mode="C" title="Celecus">C</a>
+                <a href="#" class="weather-nav__link weather-nav__link--fehrenhite weather-nav__link--active"
+                    title="Fehrenhite" data-mode="F">F</a>
+            </div>
+        </header>
+        <!-------- Weather Header End -->
+
+
+        <!-------- Weather Status Start -->
+        <section class="weather-status">
+
+            <div class="weather-info">
+                <h2 class="current-city"></h2>
+                <h3 class="current-date"></h3>
+                <canvas class="current-icon" width="128" height="128"></canvas>
+                <h3 class="current-status"></h3>
+            </div>
+
+            <div class="weather-info">
+                <h3 class="current-temperature degree"></h3>
+                <span class="today-high degree"></span>
+                <span class="separator">/</span>
+                <span class="today-low degree"></span>
+                <p class="today-summary"></p>
+            </div>
+
+        </section>
+        <!-------- Weather Status End -->
+
+        <!-------- Weather Daily & Hourly Start -->
+        <section class="weather-daily-hourly">
+            <div class="switch-buttons">
+                <a href="#" class="button button--hourly button--active" data-currentMode='hourly'>Hourly</a>
+                <a href="#" class="button button--daily" data-currentMode='daily'>Daily</a>
+            </div>
+            <!-- Weather Instance -->
+            <div class="hourly-temperature show">
+                <!--  Code goes here -->
+            </div>
+
+            <div class="daily-temperature">
+                <!--  Code goes here -->
+            </div>
+        </section>
+        <!-------- Weather Daily & Hourly End -->
+
+    </main>
+
+    <script src="assets/js/skycons.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
