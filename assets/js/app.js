@@ -135,10 +135,10 @@ const UICtrl = ((helpers) => {
 
         },
         showLoader: () => {
-            $(DomStrings.loader).classList.add('show');
+            $(DOMStrings.loader).classList.add('show');
         },
         hideLoader: () => {
-            $(DomStrings.loader).classList.remove('show');
+            $(DOMStrings.loader).classList.remove('show');
         }
     }
 })(HelpersCtrl);
