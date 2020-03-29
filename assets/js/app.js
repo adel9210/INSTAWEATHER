@@ -2,7 +2,6 @@
 const WeatherCtrl = (() => {
     let data = {
         list: {},
-        currentMode: 'F'
     };
 
     return {
@@ -11,13 +10,11 @@ const WeatherCtrl = (() => {
         },
         getDataList: () => {
             return { ...data.list }
-        },
-        setDataMode: (mode) => {
-            data.currentMode = mode;
         }
     }
 })();
 
+// helpers controller 
 const HelpersCtrl = (() => {
 
     return {
@@ -53,6 +50,7 @@ const HelpersCtrl = (() => {
     }
 })();
 
+// UI controller 
 const UICtrl = ((helpers) => {
     const DOMStrings = {
         currentCity: '.currently__city',
@@ -111,6 +109,7 @@ const UICtrl = ((helpers) => {
                 `;
             });
             $(DOMStrings.hourlyTemperature).innerHTML = hourlyHtmlList.slice(0, 24).join('');
+
             // Daily 
             const dailyHtmlList = data.daily.data.map((day, index) => {
                 return `
@@ -134,11 +133,18 @@ const UICtrl = ((helpers) => {
             })
 
 
+        },
+        showLoader: () => {
+            $(DomStrings.loader).classList.add('show');
+        },
+        hideLoader: () => {
+            $(DomStrings.loader).classList.remove('show');
         }
     }
 })(HelpersCtrl);
 
 
+//App Controller 
 const App = ((weather, UI, helpers) => {
     const DomStrings = UI.getDomStrings();
     const $ = helpers._$;
@@ -148,18 +154,18 @@ const App = ((weather, UI, helpers) => {
         // Show loader 
         $(DomStrings.loader).classList.add('show');
 
+        // check if browser suppert geolocation API
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
                 // Hide loader 
                 $(DomStrings.loader).classList.remove('show');
 
+                // Long & Lat
                 const { longitude, latitude } = position.coords;
 
                 // FETCH DATA   
                 fetchData(latitude, longitude);
 
-                // Setup events
-                setupEventsListener();
             }, err => {
                 alert(err.message);
 
@@ -171,13 +177,13 @@ const App = ((weather, UI, helpers) => {
 
     const setupEventsListener = () => {
         // Toggle Temperature Mode
-        const toggleTemperatureDegree = (btn, e) => {
+        const toggleTemperatureDegree = (button, e) => {
 
             // Change temperature mode 
-            const mode = btn.dataset.mode;
+            const mode = button.dataset.mode;
 
-            // Convert temperature to exact mode 
-            if (!btn.classList.contains(DomStrings.navLinkActive)) {
+            // to disable function if user hit the already active   
+            if (!button.classList.contains(DomStrings.navLinkActive)) {
                 [...$(DomStrings.temperatureDegree)].forEach((element) => {
                     element.textContent = helpers.temperatureConverter(element.textContent, mode);
                 });
@@ -189,7 +195,7 @@ const App = ((weather, UI, helpers) => {
             });
 
             // Add active class 
-            btn.classList.add(DomStrings.navLinkActive);
+            button.classList.add(DomStrings.navLinkActive);
 
 
             e.preventDefault();
@@ -238,7 +244,7 @@ const App = ((weather, UI, helpers) => {
 
     const fetchData = (lat, long) => {
         // Show loader 
-        $(DomStrings.loader).classList.add('show');
+        UI.showLoader();
 
         const proxy = 'https://cors-anywhere.herokuapp.com/';
         // Test purpose -- https://www.latlong.net/
@@ -259,6 +265,10 @@ const App = ((weather, UI, helpers) => {
                 if (!data.longitude) {
                     return;
                 }
+
+                // Setup events
+                setupEventsListener();
+
                 // SET DATA 
                 weather.setData({ ...data });
 
@@ -266,12 +276,11 @@ const App = ((weather, UI, helpers) => {
                 UI.fillData({ ...data });
 
                 // Hide loader 
-                $(DomStrings.loader).classList.remove('show');
+                UI.hideLoader()
 
             }).finally(() => {
                 // Hide loader 
-                $(DomStrings.loader).classList.remove('show');
-
+                UI.hideLoader()
             })
     }
 
@@ -281,4 +290,5 @@ const App = ((weather, UI, helpers) => {
 })(WeatherCtrl, UICtrl, HelpersCtrl);
 
 
+// Run the app
 App.init();
