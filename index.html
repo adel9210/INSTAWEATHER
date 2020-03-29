@@ -7,14 +7,13 @@
     <title>Insta & Weather</title>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700,800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="dist/css/main.main.css">
+    <link rel="stylesheet" href="dist/css/main.min.css">
 </head>
 
 <body>
     <!-- Loader  -->
     <div class="loader">
         <div></div>
-        <!-- <div></div> -->
     </div>
 
     <main class="container">
@@ -34,19 +33,19 @@
         <!-------- Weather Status Start -->
         <section class="weather-status">
 
-            <div class="weather-info">
-                <h2 class="current-city"></h2>
-                <h3 class="current-date"></h3>
-                <canvas class="current-icon" width="128" height="128"></canvas>
-                <h3 class="current-status"></h3>
+            <div class="currently">
+                <h2 class="currently__city"></h2>
+                <h3 class="currently__date"></h3>
+                <canvas class="currently__icon" width="128" height="128"></canvas>
+                <h3 class="currently__status"></h3>
             </div>
 
-            <div class="weather-info">
-                <h3 class="current-temperature degree"></h3>
-                <span class="today-high degree"></span>
+            <div class="currently">
+                <span class="currently__temperature degree"></span>
+                <span class="currently__today-high degree"></span>
                 <span class="separator">/</span>
-                <span class="today-low degree"></span>
-                <p class="today-summary"></p>
+                <span class="currently__today-low degree"></span>
+                <p class="currently__today-summary"></p>
             </div>
 
         </section>

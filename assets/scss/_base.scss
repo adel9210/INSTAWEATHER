@@ -10,16 +10,16 @@ html {
   font-family: "Work Sans", sans-serif;
 }
 
-
-  @media screen and (max-width: 600px) { // 600 / 16
-    html {
-      font-size: 10px;
-    }
+//37.5 = 600
+@media screen and (max-width: 37.5em) {
+  html {
+    font-size: 10px;
   }
+}
 body {
   font-weight: 400;
   color: $color-white;
-  background-image: url("../..//assets/images/Background.png");
+  background-image: url("../..//assets/images/hero.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

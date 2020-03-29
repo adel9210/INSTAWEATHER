@@ -48,21 +48,21 @@ const HelpersCtrl = (() => {
                     break
             }
 
-            return temperature.toFixed(1);
+            return temperature.toFixed(0);
         }
     }
 })();
 
 const UICtrl = ((helpers) => {
     const DOMStrings = {
-        currentCity: '.current-city',
-        currentDate: '.current-date',
-        currentStatus: '.current-status',
-        currentIcon: '.current-icon',
-        currentTemperature: '.current-temperature',
-        currentSummary: '.today-summary',
-        temperatureHigh: '.today-high',
-        temperatureLow: '.today-low',
+        currentCity: '.currently__city',
+        currentDate: '.currently__date',
+        currentStatus: '.currently__status',
+        currentIcon: '.currently__icon',
+        currentTemperature: '.currently__temperature',
+        currentSummary: '.currently__today-summary',
+        temperatureHigh: '.currently__today-high',
+        temperatureLow: '.currently__today-low',
         loader: '.loader',
         hourlyTemperature: '.hourly-temperature',
         dailyTemperature: '.daily-temperature',
@@ -82,21 +82,23 @@ const UICtrl = ((helpers) => {
         fillData: (data) => {
             const { time, temperature, summary, icon } = data.currently;
             const { temperatureHigh, temperatureLow } = data.daily.data[0]; // First day = today
+            const dateOptions = { weekday: 'long', year: 'numeric', day: 'numeric' }
+
 
             // Currently 
             $(DOMStrings.currentCity).textContent = data.timezone;
-            $(DOMStrings.currentDate).textContent = new Date(time * 1000).toDateString();
+            $(DOMStrings.currentDate).textContent = new Date(time * 1000).toLocaleDateString('usa', dateOptions);
             $(DOMStrings.currentStatus).textContent = summary;
-            $(DOMStrings.currentTemperature).textContent = temperature.toFixed(1);
+            $(DOMStrings.currentTemperature).textContent = temperature.toFixed(0);
             $(DOMStrings.currentSummary).textContent = data.hourly.summary;
-            $(DOMStrings.temperatureHigh).textContent = temperatureHigh.toFixed(1);
-            $(DOMStrings.temperatureLow).textContent = temperatureLow.toFixed(1);
+            $(DOMStrings.temperatureHigh).textContent = temperatureHigh.toFixed(0);
+            $(DOMStrings.temperatureLow).textContent = temperatureLow.toFixed(0);
 
             // current icon 
             const currentIcon = icon.replace(/-/g, "_").toUpperCase();
             const skycons = new Skycons({ "color": "white" });
             skycons.play();
-            skycons.set(document.querySelector('.current-icon'), Skycons[currentIcon]);
+            skycons.set($(DOMStrings.currentIcon), Skycons[currentIcon]);
 
             // Hourly 
             const hourlyHtmlList = data.hourly.data.map((hour, index) => {
@@ -104,7 +106,7 @@ const UICtrl = ((helpers) => {
                 <div class="temperature">
                     <h3 class="temperature__time">${new Date(hour.time * 1000).toLocaleTimeString().slice(0, 5)}</h3>
                     <canvas class="hourly-icon" data-currentIcon=${hour.icon} title=${hour.icon}  width="66" height="66"></canvas>
-                    <h3 class="temperature__degree degree">${hour.temperature.toFixed(1)}</h3>
+                    <h3 class="temperature__degree degree">${hour.temperature.toFixed(0)}</h3>
                 </div>
                 `;
             });
@@ -113,11 +115,11 @@ const UICtrl = ((helpers) => {
             const dailyHtmlList = data.daily.data.map((day, index) => {
                 return `
                 <div class="temperature">
-                    <h3 class="temperature__time">${new Date(day.time * 1000).toLocaleDateString()}</h3>
+                    <h3 class="temperature__time">${new Date(day.time * 1000).toString().split(' ')[0]}</h3>
                     <canvas class="daily-icon" data-currentIcon=${day.icon} title=${day.icon} width="66" height="66"></canvas>
                     <p>
-                    <span class="degree temperature__degree">${day.temperatureHigh.toFixed(1)}</span> /
-                    <span class="degree temperature__degree">${day.temperatureLow.toFixed(1)}</span>
+                    <span class="degree temperature__degree">${day.temperatureHigh.toFixed(0)}</span> /
+                    <span class="degree temperature__degree">${day.temperatureLow.toFixed(0)}</span>
                     </p>
                 </div>
                 `;
@@ -249,7 +251,7 @@ const App = ((weather, UI, helpers) => {
         lat = 46.227638;
         long = 2.213749;
         */
-        fetch(`https://api.darksky.net/forecast/a177f8481c31fa96c3f95ad4f4f84610/${lat},${long}`)
+        fetch(`${proxy}https://api.darksky.net/forecast/a177f8481c31fa96c3f95ad4f4f84610/${lat},${long}`)
             .then(response => {
                 return response.json();
             })

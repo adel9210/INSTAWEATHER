@@ -11,11 +11,11 @@
 // WEATHER LOGO
 .logo {
   font-size: 2.25rem;
+  font-weight: bold;
   letter-spacing: 0.05em;
   color: inherit;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: bold;
 }
 
 // HEADER
@@ -49,59 +49,64 @@
   display: flex;
   justify-content: space-between;
 
-  padding-top: 170px;
+  padding-top: 171px; // as per design
 
-  .temperature:last-of-type {
-    text-align: right;
-  }
+  .currently {
+    &__city {
+      font-size: 4rem;
+      letter-spacing: 0.05em;
+    }
 
-  .current-city {
-    font-size: 4rem;
-    letter-spacing: 0.05em;
-  }
+    &__date {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 10px 0;
+    }
 
-  .current-date {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 10px 0;
-  }
+    &__status {
+      font-size: 1.875rem;
+      padding-left: 20px;
+    }
 
-  .current-status {
-    font-size: 1.875rem;
-    padding-left: 20px;
-  }
-  .current-temperature {
-    font-size: 9rem;
-    position: relative;
+    &__temperature {
+      display: block;
+      font-size: 9rem;
+      position: relative;
 
-    @extend %degreeSign;
-  }
+      @extend %degreeSign;
+    }
 
-  .today-high,
-  .today-low {
-    font-size: 3rem;
-    letter-spacing: 0.05rem;
-    font-weight: 400;
-    position: relative;
-    margin: 20px 0;
-    display: inline-block;
+    &__today-high,
+    &__today-low {
+      font-size: 3rem;
+      letter-spacing: 0.05rem;
+      font-weight: 400;
+      position: relative;
+      margin: 20px 0;
+      display: inline-block;
 
-    @extend %degreeSign;
-  }
+      @extend %degreeSign;
+    }
 
-  .today-low {
-    color: $color-white-grey-1;
+    &__today-low {
+      color: $color-white-grey-1;
+    }
+
+    &__today-summary {
+      font-size: 1.5rem;
+      margin-bottom: 100px;
+    }
+
+    &:last-of-type {
+      text-align: right;
+      padding-right: 43px; // the width of temp degree symbol
+    }
   }
 
   .separator {
     font-size: 3rem;
     font-weight: 400;
     margin: 0 10px;
-  }
-
-  .today-summary {
-    font-size: 1.5rem;
-    margin-bottom: 100px;
   }
 }
 
@@ -130,20 +135,22 @@
 // TEMPERATURE
 .temperature {
   text-align: center;
+
   &:not(:last-child) {
-    margin-right: 45px;
+    margin-right: 70px;
   }
 
   &__time {
-    font-size: 1rem;
-    font-weight: 300;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 10px;
   }
 
   &__degree {
     position: relative;
     margin-top: 10px;
     font-weight: 400;
-    font-size: 1.12rem;
+    font-size: 1.6rem;
     display: inline-block;
 
     @extend %degreeSign;
@@ -162,26 +169,47 @@
 // Small Device
 // 37.5em = 600px
 @media screen and(max-width: 37.5em) {
-  .current-city,
-  .weather-status .current-temperature {
-    font-size: 2rem;
+  .weather-nav__link {
+    width: 50px;
+    height: 30px;
   }
 
   .weather-status {
     padding-top: 50px;
 
     flex-direction: column;
-    .current-status {
-      padding-left: 0;
-    }
 
-    .today-summary {
-      margin-bottom: 30px;
+    .currently {
+      text-align: center;
+      margin-bottom: 20px;
+
+      &__status {
+        padding-left: 0;
+      }
+
+      &__today-summary {
+        margin-bottom: 30px;
+      }
+
+      &__city {
+        font-size: 3rem;
+      }
+
+      &:last-of-type {
+        padding-right: 0;
+        text-align: center;
+      }
     }
   }
 
-  .weather-info {
-    text-align: center;
-    margin-bottom: 20px;
+  .temperature {
+    &__time,
+    &__degree {
+      font-size: 1.5rem;
+    }
+
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
   }
 }
