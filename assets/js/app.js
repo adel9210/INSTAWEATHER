@@ -170,7 +170,7 @@ const App = ((weather, UI, helpers) => {
                 alert(err.message);
 
                 // Hide loader 
-                $(DomStrings.loader).classList.remove('show');
+                // $(DomStrings.loader).classList.remove('show');
             })
         }
     }
